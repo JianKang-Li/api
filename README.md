@@ -24,10 +24,10 @@ Post请求
 
 返回值为{
 
-  status:String,
+  	status:String,
 
-  path:String,
+  	path:String,
 
-  message: json
+  	message: json
 
 }
