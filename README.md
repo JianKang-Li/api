@@ -22,12 +22,15 @@ Post请求
 
 使用方法与get相同，可以添加body，params
 
-返回值为{
+返回值为
 
-  	status:String,
+```json
+{
+    status:String,
 
-  	path:String,
+    path:String,
 
-  	message: json
-
+    message: json
 }
+```
+
