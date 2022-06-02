@@ -38,5 +38,5 @@ Post请求
 
 
 
-版本号：<span style="background:blue;border-radius:5px">v1.0.0</span>
+版本号：<span style="background:#70a1ff;border-radius:5px">v1.0.0</span>
 
