@@ -26,11 +26,11 @@ Post请求
 
 ```json
 {
-    status:String,
+    status
 
-    path:String,
+    path
 
-    message: json
+    message
 }
 ```
 
