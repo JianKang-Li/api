@@ -1,5 +1,5 @@
 # api
-帮助你快速搭建简单后台接口
+帮助你快速请求数据，利用nodejs实现简单数据请求功能，让你有数据可以用
 
 ## 使用方法
 `git clone https://github.com/imeuser/api.git`
@@ -38,5 +38,5 @@ Post请求
 
 
 
-版本号：<span style="background:#70a1ff;border-radius:5px">v1.0.0</span>
+版本号：v1.0.1
 
