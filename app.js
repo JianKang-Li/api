@@ -8,6 +8,7 @@ app.use("/files", express.static("./files"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+//加载路由
 app.use("/api", router);
 
 // 错误中间件
