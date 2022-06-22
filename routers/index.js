@@ -37,7 +37,9 @@ router.post("/", (req, res, next) => {
   let h = date.getHours();
   let m = date.getMinutes();
   let s = date.getSeconds();
-  console.log(`POST ${req.query.db} 200 ${h}:${m}:${s}`);
+  console.log(
+    `POST ${req.query.db ? req.query.db : "/api"} 200 ${h}:${m}:${s}`
+  );
   let name = req.query.db;
   let object = JSON.stringify(req.body);
   console.log(object);
