@@ -18,5 +18,5 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(3000, () => {
-  console.log("express start at http://127.0.0.1:3000");
+  console.log("express start at http://127.0.0.1:3000/api");
 });
