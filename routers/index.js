@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const fs = require("fs")
+const Config = require('../config')
 
 function getTime() {
   const date = new Date()
@@ -10,7 +11,7 @@ function getTime() {
   let h = date.getHours()
   let m = date.getMinutes()
   let s = date.getSeconds()
-  return `'${y}-${M}-${d} ${h}:${m}:${s}'`
+  return `'${y}-${M.toFixed(2)}-${d} ${h}:${m}:${s}'`
 }
 
 function getPath(name) {
@@ -23,8 +24,8 @@ router.get("/", (req, res, next) => {
     const time = getTime()
     if (name) {
       const path = getPath(name)
-      const isex = fs.existsSync(path)
-      if (isex) {
+      const isExist = fs.existsSync(path)
+      if (isExist) {
         fs.readFile(path, (err, data) => {
           if (err) next(err)
           res.setHeader("Content-Type", "text/json;charset=UTF-8")
@@ -39,7 +40,7 @@ router.get("/", (req, res, next) => {
         console.log(`GET ${req.query.db} 404 ${h}:${m}:${s}`)
       }
     } else {
-      res.send("Please use http://127.0.0.1:3000/api?db=Params")
+      res.send("Please use /api?db=Params")
       console.log(`GET ${req.query.db} 404 ${time}`)
     }
   } catch (e) {

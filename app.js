@@ -4,6 +4,7 @@ const app = express()
 const cors = require("cors")
 const router = require("./routers/index")
 const getIPAddress = require("./utils/ip")
+const Config = require('./config')
 // 托管静态资源文件
 app.use("/files", express.static("./files"))
 app.use(cors())
@@ -15,13 +16,11 @@ app.use("/api", router)
 // 错误中间件
 app.use(function (err, req, res, next) {
   console.log(err)
-  res.send({ status: "500", message: err })
+  res.status(500).send({ status: "500", message: err })
 })
 
 const ip = getIPAddress()
-const port = '3000'
 
-app.listen(port, () => {
-  console.log(`Welecome to use this project\nexpress start at ${ip}:${port}/api
-  `)
+app.listen(Config.port, () => {
+  console.log('\x1B[32m%s\x1B[0m', `Welcome to use this project\nexpress start at http://${ip}:${Config.port}/api`)
 })
