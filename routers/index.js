@@ -52,10 +52,28 @@ router.get("/", (req, res, next) => {
 router.post("/", (req, res, next) => {
   const time = getTime()
   const query = JSON.stringify(req.query)
+  let expect =null
+  if (typeof req.body.expect === 'string') {
+    expect = eval('(' + req.body.expect + ')')
+  } else {
+    expect = req.body.expect
+  }
+  console.log(
+    `POST /api 200 ${time} ${query}`
+  )
+  const content = expect
+  res.setHeader("Content-Type", "text/json")
+  res.send(content)
+})
+
+// Delete 
+router.delete('/', (req,res,next) => {
+  const time = getTime()
+  const query = JSON.stringify(req.query)
   const expect = eval('(' + req.body.expect + ')')
 
   console.log(
-    `POST /api 200 ${time} ${query}`
+    `Delete /api 200 ${time} ${query}`
   )
   const content = expect
   res.setHeader("Content-Type", "text/json")
