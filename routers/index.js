@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const fs = require("fs")
 const Config = require('../config')
+const Util = require('../utils/util')
 
 function getTime() {
   const date = new Date()
@@ -58,15 +59,19 @@ router.post("/", (req, res, next) => {
   } else {
     expect = req.body.expect
   }
+  const delayTime = parseInt(req.body.delay) || 0
+
   console.log(
     `POST /api 200 ${time} ${query}`
   )
   const content = expect
-  res.setHeader("Content-Type", "text/json")
-  res.send(content)
+  Util.delay(delayTime,() => {
+    res.json(content)
+    next()
+  })
 })
 
-// Delete 
+// Delete
 router.delete('/', (req,res,next) => {
   const time = getTime()
   const query = JSON.stringify(req.query)
@@ -76,8 +81,13 @@ router.delete('/', (req,res,next) => {
     `Delete /api 200 ${time} ${query}`
   )
   const content = expect
-  res.setHeader("Content-Type", "text/json")
-  res.send(content)
+  const delayTime = parseInt(req.body.delay) || 0
+
+  Util.delay(delayTime,() => {
+    res.setHeader("Content-Type", "text/json")
+    res.send(content)
+    next()
+  })
 })
 
 module.exports = router
