@@ -37,7 +37,7 @@ router.get("/", (req, res, next) => {
           console.log(`GET ${req.query.db} 200 ${time}`)
         })
       } else {
-        res.status(404).send("No files like " + req.query.db + ".json")
+        res.status(404).send("No such files name " + req.query.db + ".json")
         console.log(`GET ${req.query.db} 404 ${h}:${m}:${s}`)
       }
     } else {
