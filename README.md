@@ -4,7 +4,7 @@
 
 ## 使用方法
 
-`git clone https://github.com/imeuser/api.git`
+`git clone https://github.com/JianKang-Li/api.git`
 
 `npm install`
 
@@ -13,6 +13,7 @@
 然后你就可以向接口发送请求了！
 
 ## 使用指南
+### /api
 
 Get请求
 
@@ -22,17 +23,33 @@ Get请求
 
 Post请求
 
-使用方法`http:127.0.0.1:3000/api/text`
-
-**可以添加请求参数，但请求参数会和body合并返回，避免覆盖**
-
-返回值为
-
-```json
+使用方法`http:127.0.0.1:3000/api`
+```js
+// 可以使用自定义参数进行返回自定义
 {
-    status
-    message
+  expect: { // 想要返回的数据信息（默认空对象）
+  },
+  status: 200, // 返回的状态码（默认200）
+  delay: 300, // 延时返回请求时间（默认0）
+}
+```
+### /api/timeout
+超时请求
+
+```js
+params: {
+  delay: 2000, // 请求延时返回时间（默认0）
 }
 ```
 
-版本号：v0.0.2
+### /api/error
+自定义错误请求模拟
+```js
+params: {
+  delay: 2000, // 请求延时返回时间（默认0）
+  code: 404 // 请求返回状态码（默认404）
+}
+```
+
+## 备注
+版本号：v1.0.0

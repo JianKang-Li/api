@@ -55,7 +55,7 @@ function ResolveBodyReq(req,res,next,type) {
   const time = getTime()
   const query = JSON.stringify(req.query)
   const body = req.body
-  const expect = body.expect
+  const expect = body.expect || {}
   const code = body.status || 200
   const delayTime = parseInt(body.delay) || 0
 
