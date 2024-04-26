@@ -108,11 +108,27 @@ router.all('/timeout', (req,res,next) => {
   const delayTime = parseInt(query.delay) || 0
 
   console.log(
-    `TimeOut /timeout 504 ${time} ${JSON.stringify(query)}`
+    `${req.method} /timeout 504 ${time} ${JSON.stringify(query)}`
   )
 
   Util.delay(delayTime,() => {
     res.status(504).send()
+    next()
+  })
+})
+
+router.all('/error', (req,res,next) => {
+  const time = getTime()
+  const query = req.query
+  const delayTime = parseInt(query.delay) || 0
+  const code = parseInt(query.code) || 404
+
+  console.log(
+    `${req.method} /error ${code} ${time} ${JSON.stringify(query)}`
+  )
+
+  Util.delay(delayTime,() => {
+    res.status(code).send()
     next()
   })
 })
