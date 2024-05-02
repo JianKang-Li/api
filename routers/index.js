@@ -51,7 +51,7 @@ router.get("/", (req, res, next) => {
 })
 
 // 处理 POST、PUT 等有请求体的请求
-function ResolveBodyReq(req,res,next,type) {
+function ResolveBodyReq(req, res, next, type) {
   const time = getTime()
   const query = JSON.stringify(req.query)
   const body = req.body
@@ -62,14 +62,14 @@ function ResolveBodyReq(req,res,next,type) {
   console.log(
     `${type} /api ${code} ${time} ${query}`
   )
-  Util.delay(delayTime,() => {
+  Util.delay(delayTime, () => {
     res.status(code).json(expect)
     next()
   })
 }
 
 // 处理 DELETE 等没有请求体的请求
-function ResolveReq(req,res,next,type) {
+function ResolveReq(req, res, next, type) {
   const query = req.query
   const time = getTime()
   const expect = Util.toJSON(query.expect)
@@ -80,7 +80,7 @@ function ResolveReq(req,res,next,type) {
     `${type} /api ${code} ${time} ${JSON.stringify(query)}`
   )
 
-  Util.delay(delayTime,() => {
+  Util.delay(delayTime, () => {
     res.status(code).json(expect)
     next()
   })
@@ -88,21 +88,21 @@ function ResolveReq(req,res,next,type) {
 
 // POST
 router.post("/", (req, res, next) => {
-  ResolveBodyReq(req,res,next,'POST')
+  ResolveBodyReq(req, res, next, 'POST')
 })
 
 // PUT
-router.put('/', (req,res,next) => {
-  ResolveBodyReq(req,res,next,'PUT')
+router.put('/', (req, res, next) => {
+  ResolveBodyReq(req, res, next, 'PUT')
 })
 
 // DELETE
-router.delete('/', (req,res,next) => {
-  ResolveReq(req,res,next,'DELETE')
+router.delete('/', (req, res, next) => {
+  ResolveReq(req, res, next, 'DELETE')
 })
 
 // 超时请求
-router.all('/timeout', (req,res,next) => {
+router.all('/timeout', (req, res, next) => {
   const time = getTime()
   const query = req.query
   const delayTime = parseInt(query.delay) || 0
@@ -111,13 +111,13 @@ router.all('/timeout', (req,res,next) => {
     `${req.method} /timeout 504 ${time} ${JSON.stringify(query)}`
   )
 
-  Util.delay(delayTime,() => {
+  Util.delay(delayTime, () => {
     res.status(504).send()
     next()
   })
 })
 
-router.all('/error', (req,res,next) => {
+router.all('/error', (req, res, next) => {
   const time = getTime()
   const query = req.query
   const delayTime = parseInt(query.delay) || 0
@@ -127,7 +127,7 @@ router.all('/error', (req,res,next) => {
     `${req.method} /error ${code} ${time} ${JSON.stringify(query)}`
   )
 
-  Util.delay(delayTime,() => {
+  Util.delay(delayTime, () => {
     res.status(code).send()
     next()
   })

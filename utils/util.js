@@ -1,10 +1,10 @@
-function delay (time, callback) {
+function delay(time, callback) {
   setTimeout(function () {
     callback()
   }, time)
 }
 
-function toJSON (text) {
+function toJSON(text) {
   switch (typeof text) {
     case 'string': {
       const str = text.replace(/\s+|\\n/g, '')
@@ -16,8 +16,8 @@ function toJSON (text) {
   }
 }
 
-function DateTimeFormat(text,num,fixed){
-  return text.toString().padStart(num,fixed)
+function DateTimeFormat(text, num, fixed) {
+  return text.toString().padStart(num, fixed)
 }
 
 module.exports = {
