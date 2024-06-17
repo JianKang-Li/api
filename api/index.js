@@ -2,15 +2,20 @@
 const express = require("express")
 const app = express()
 const cors = require("cors")
-const router = require("./routers/index")
-const getIPAddress = require("./utils/ip")
-const Config = require('./config')
+const router = require("../routers/index")
+const getIPAddress = require("../utils/ip")
+const Config = require('../config')
 // 托管静态资源文件
-app.use("/files", express.static("./files"))
+app.use("/files", express.static("../files"))
 // 使用插件
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+app.get('/', function (req, res) {
+	res.send('please add /api to use')
+});
+
 //加载路由
 app.use("/api", router)
 
@@ -25,3 +30,5 @@ const ip = getIPAddress()
 app.listen(Config.port, () => {
   console.log('\x1B[32m%s\x1B[0m', `Welcome to use this project\nexpress start at http://${ip}:${Config.port}/api`)
 })
+
+module.exports = app
