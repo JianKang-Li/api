@@ -4,17 +4,6 @@ const fs = require("fs")
 const Config = require('../config')
 const Util = require('../utils/util')
 
-function getTime() {
-  const date = new Date()
-  const y = Util.DateTimeFormat(date.getFullYear(), 4, '0')
-  const M = Util.DateTimeFormat(date.getMonth() + 1, 2, '0')
-  const d = Util.DateTimeFormat(date.getDate(), 2, '0')
-  let h = Util.DateTimeFormat(date.getHours(), 2, '0')
-  let m = Util.DateTimeFormat(date.getMinutes(), 2, '0')
-  let s = Util.DateTimeFormat(date.getSeconds(), 2, '0')
-  return `'${y}-${M}-${d} ${h}:${m}:${s}'`
-}
-
 function getPath(name) {
   return `./files/${name}.json`
 }
@@ -23,7 +12,7 @@ function getPath(name) {
 router.get("/", (req, res, next) => {
   try {
     const name = req.query.db
-    const time = getTime()
+    const time = Util.getTime()
     if (name) {
       const path = getPath(name)
       const isExist = fs.existsSync(path)
@@ -52,7 +41,7 @@ router.get("/", (req, res, next) => {
 
 // 处理 POST、PUT 等有请求体的请求
 function ResolveBodyReq(req, res, next, type) {
-  const time = getTime()
+  const time = Util.getTime()
   const query = JSON.stringify(req.query)
   const body = req.body
   const expect = body.expect || {}
@@ -71,7 +60,7 @@ function ResolveBodyReq(req, res, next, type) {
 // 处理 DELETE 等没有请求体的请求
 function ResolveReq(req, res, next, type) {
   const query = req.query
-  const time = getTime()
+  const time = Util.getTime()
   const expect = Util.toJSON(query.expect)
   const code = parseInt(query.status) || 200
   const delayTime = parseInt(query.delay) || 0
@@ -103,7 +92,7 @@ router.delete('/', (req, res, next) => {
 
 // 超时请求
 router.all('/timeout', (req, res, next) => {
-  const time = getTime()
+  const time = Util.getTime()
   const query = req.query
   const delayTime = parseInt(query.delay) || 0
 
@@ -118,7 +107,7 @@ router.all('/timeout', (req, res, next) => {
 })
 
 router.all('/error', (req, res, next) => {
-  const time = getTime()
+  const time = Util.getTime()
   const query = req.query
   const delayTime = parseInt(query.delay) || 0
   const code = parseInt(query.code) || 404

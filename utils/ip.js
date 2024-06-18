@@ -33,6 +33,6 @@ const getIPAddress = function () {
   }
 
   return ipv4 || "127.0.0.1"
-};
+}
 
 module.exports = getIPAddress
