@@ -12,6 +12,7 @@ function getPath(name) {
 router.get("/", (req, res, next) => {
   try {
     const name = req.query.db
+    const code = req.query.code || 200
     const time = Util.getTime()
     if (name) {
       const path = getPath(name)
@@ -31,8 +32,8 @@ router.get("/", (req, res, next) => {
         console.log(`GET ${req.query.db} 404 ${h}:${m}:${s}`)
       }
     } else {
-      res.send("Please use /api?db=Params")
-      console.log(`GET ${req.query.db} 404 ${time}`)
+      res.status(code).json({})
+      console.log(`GET / ${code} ${time}`)
     }
   } catch (e) {
     next(e)
