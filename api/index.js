@@ -6,6 +6,7 @@ const router = require("../routers/index")
 const getIPAddress = require("../utils/ip")
 const Config = require('../config')
 const path = require('path')
+const net = require('net')
 const Util = require('../utils/util')
 // 托管静态资源文件
 app.use("/files", express.static("../files"))
@@ -41,8 +42,23 @@ app.use(function (err, req, res, next) {
 
 const ip = getIPAddress()
 
-app.listen(Config.port, () => {
-  console.log('\x1B[32m%s\x1B[0m', `Welcome to use this project\nexpress start at http://${ip}:${Config.port}/api`)
-})
+function findPort(startPort, callback) {
+  const server = net.createServer();
+  server.once('error', err => {
+    if (err.code !== 'EADDRINUSE') return callback(err);
+    findPort(startPort + 1, callback);
+  });
+  server.once('listening', () => {
+    server.close(() => {
+      callback(null, startPort);
+    });
+  });
+  server.listen(startPort);
+}
 
+findPort(Config.port, (err, port) => {
+  app.listen(port, () => {
+    console.log('\x1B[32m%s\x1B[0m', `Welcome to use this project\nexpress start at http://${ip}:${port}/api`)
+  })
+})
 module.exports = app
