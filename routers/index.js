@@ -123,4 +123,30 @@ router.all('/error', (req, res, next) => {
   })
 })
 
+router.post('/jsonRpc',(req,res, next) => {
+  const query = req.query
+  const time = Util.getTime()
+  const code = parseInt(query.status) || 200
+  const delayTime = parseInt(query.delay) || 0
+  const body = req.body
+  const params = body.params
+  const expect = Util.toJSON(params.expect)
+  const id = body.id
+  const version = body.jsonrpc
+
+  console.log(
+    `POST /jsonRpc ${code} ${time} ${JSON.stringify(query)}`
+  )
+
+  Util.delay(delayTime, () => {
+    res.status(code).send({
+      jsonrpc: version,
+      id,
+      result: expect
+    })
+    next()
+  })
+
+})
+
 module.exports = router
