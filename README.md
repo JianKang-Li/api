@@ -17,11 +17,18 @@
 
 Get请求
 
-（1）在files文件夹中加入你需要数据的json文件
+  (1)在files文件夹中加入你需要数据的json文件
 
-（2）然后通过请求`http:127.0.0.1:3000/api?db=`+你想访问的文件名(不含json后缀)
+  (2) 然后通过请求`http:127.0.0.1:3000/api?db=`+你想访问的文件名(不含json后缀)
 
- (3) 如果不加`db`参数默认返回空对象
+  (3) 使用 expect 参数
+  ```js
+    params:{
+      expect: encodeURIComponent(JSON.stringify({ code: 200, data: ['123'] }))
+    }
+  ```
+
+  (4) 如果不加`db`参数默认返回空对象
 
 Post请求
 
@@ -54,4 +61,4 @@ params: {
 ```
 
 ## 备注
-版本号：v1.0.0
+版本号：v1.0.1

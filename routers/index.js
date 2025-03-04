@@ -12,8 +12,10 @@ function getPath(name) {
 router.get("/", (req, res, next) => {
   try {
     const name = req.query.db
+    const expect = decodeURIComponent(req.query.expect)
     const code = req.query.code || 200
     const time = Util.getTime()
+
     if (name) {
       const path = getPath(name)
       const isExist = fs.existsSync(path)
@@ -31,6 +33,13 @@ router.get("/", (req, res, next) => {
         res.status(404).send("No such files name " + req.query.db + ".json")
         console.log(`GET ${req.query.db} 404 ${h}:${m}:${s}`)
       }
+    } else if (expect) {
+      if (expect.startsWith('{')) {
+        res.status(code).json(Util.toJSON(expect))
+      } else {
+        res.status(code).send(expect)
+      }
+      console.log(`GET / ${code} ${time} ${expect}`)
     } else {
       res.status(code).json({})
       console.log(`GET / ${code} ${time}`)
