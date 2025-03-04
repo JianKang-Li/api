@@ -1,0 +1,20 @@
+version: '3.5'
+
+networks:
+  my-net:
+    name: website-network
+    driver: bridge
+
+services:
+  node:
+    image: "node:20"
+    container_name: api
+    restart: always
+    working_dir: /home/app
+    volumes:
+      - .:/home/app
+    ports:
+      - "3002:3000"
+    networks:
+      - my-net
+    command: "npm start"
